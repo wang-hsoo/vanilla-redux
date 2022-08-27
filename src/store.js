@@ -2,7 +2,7 @@ import {createStore} from "redux";
 import { createAction, createReducer, configureStore, createSlice } from "@reduxjs/toolkit";
 
 
-const getToDo = localStorage.getItem("toDo");
+const getToDo = JSON.parse(localStorage.getItem("toDo"));
 
 /*const reducer = (state = JSON.parse(getToDo) || [], action) => {
     switch(action.type){
@@ -34,17 +34,25 @@ const reducer = createReducer([], {
 
 const toDos =createSlice({
     name: 'toDosReducer',
-    initialState: [],
+    initialState: getToDo || [],
     reducers: {
         add:(state, action) => {
-            state.push({text: action.payload, id: Date.now()});
+            const toDo = {text: action.payload, id: Date.now()};
+            state.push(toDo);
+            const toDos = [...getToDo, toDo];
+            localStorage.setItem("toDo", JSON.stringify(toDos));
         },
-        remove: (state, action) => 
-        state.filter(toDo => toDo.id !== action.payload)
+        remove: (state, action) => {
+            const toDo = state.filter(toDo => toDo.id !== action.payload);
+            localStorage.setItem("toDo", JSON.stringify(toDo));
+            return toDo;
+        }
     }
 })
 
 const store = configureStore({reducer: toDos.reducer});
+
+
 
 export const {add, remove} = toDos.actions;
 
