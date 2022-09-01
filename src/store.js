@@ -32,6 +32,7 @@ const reducer = createReducer([], {
     
 }) */
 
+//createSlice reducer 함수와 action creator를 포함한 객체
 const toDos =createSlice({
     name: 'toDosReducer',
     initialState: getToDo || [],
@@ -51,7 +52,7 @@ const toDos =createSlice({
 })
 
 const store = configureStore({reducer: toDos.reducer});
-
+//configureStore reducer에서 반환된 새로운 state를 store라는 객체로 정리해 관리하는 곳
 
 
 export const {add, remove} = toDos.actions;
