@@ -10,7 +10,7 @@ function Home({toDos, addToDo}){
     }
     function onSubmit(e){
         e.preventDefault();
-        addToDo(text);
+        addToDo({text: text, id: Date.now()});
         setText("");
     }
 

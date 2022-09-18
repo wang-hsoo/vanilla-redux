@@ -38,9 +38,10 @@ const toDos =createSlice({
     initialState: getToDo || [],
     reducers: {
         add:(state, action) => {
-            const toDo = {text: action.payload, id: Date.now()};
+            const toDo = {text: action.payload.text, id: action.payload.id };
+            
             state.push(toDo);
-            const toDos = [...getToDo, toDo];
+            const toDos = [...getToDo || [], toDo];
             localStorage.setItem("toDo", JSON.stringify(toDos));
         },
         remove: (state, action) => {
